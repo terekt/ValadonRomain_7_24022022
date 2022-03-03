@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.container {
+    padding: 0 8vw;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin: 42px 0 17px 0;
+}
+
+#searchinput {
+    border-style: none;
+    background-color: #E7E7E7;
+    border-radius: 5px;
+    width: 100%;
+    height: 69px;
+    padding-left: 24px;
+    font-size: 18px;
+}
+
+.searchbar i {
+    font-size: 30px;
+    position: absolute;
+    right: 8%;
+    top: 172px;
+}
+
+.filtre-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.filtre {
+    border-radius: 5px;
+    color: #f5f6fa;
+    position: relative;
+    order: 0;
+    cursor: pointer;
+    height: 69px;
+    width: 170px;
+    margin-right: 20px;
+}
+
+.filtre p {
+    padding: 25px 0 0 20px;
+}
+
+.filtre::after {
+    content: "";
+    background: url("../icon/arrow-down.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 100%;
+    width: 32px;
+    right: 10px;
+    top: 19px;
+    transition: all 0.4s;
+}
+
+.ingredient.active+.filtre::after {
+    transform: rotateX(180deg);
+    top: -17px;
+}
+
+.ingredient {
+    background: #3282F7;
+}
+
+.appareil {
+    background: #68D9A4;
+}
+
+.ustensile {
+    background: #ED6454;
+}
