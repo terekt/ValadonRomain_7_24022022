@@ -15,7 +15,7 @@ searchinput.addEventListener("keyup", function () { // quand on tape une touche 
             return (name || description || ingredientList) // retourne les éléments correspondants aux 3 critères
         })
     }
-    else { //sinon revois une variable vide
+    else { // sinon revois une variable vide
         result = "";
     }
 
