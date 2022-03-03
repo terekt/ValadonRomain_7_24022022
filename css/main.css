@@ -4,6 +4,11 @@
     font-family: 'Lato', sans-serif;
 }
 
+img {
+    object-fit: cover;
+    display: block;
+}
+
 .container {
     padding: 0 8vw;
 }
@@ -51,6 +56,21 @@
     padding: 25px 0 0 20px;
 }
 
+.filtre input {
+    width: 150px;
+    height: 70px;
+    padding: 0 0 0 20px;
+    border: none;
+    border-radius: 5px;
+    color: #f5f6fa;
+    cursor: pointer;
+}
+
+.filtre input::placeholder {
+    color: #f5f6fa;
+    font-family: 'Lato', sans-serif;
+}
+
 .filtre::after {
     content: "";
     background: url("../icon/arrow-down.svg");
@@ -69,14 +89,74 @@
     top: -17px;
 }
 
-.ingredient {
+.ingredient input {
     background: #3282F7;
 }
 
-.appareil {
+.appareil input {
     background: #68D9A4;
 }
 
-.ustensile {
+.ustensile input {
     background: #ED6454;
+}
+
+.resultat-container {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.resultat {
+    max-width: 380px;
+    max-height: 364px;
+    border-radius: 5px;
+    background-color: #E7E7E7;
+    margin-bottom: 50px;
+}
+
+.resultat img {
+    width: 380px;
+    height: 178px;
+    border-radius: 5px 5px 0 0;
+}
+
+.resultat-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.titre-container{
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.temps {
+    display: flex;
+    font-weight: 700;
+}
+
+.temps i {
+    margin-right: 7px;
+}
+
+.description-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.texte-recette {
+    max-width: 171px;
+    max-height: 105px;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
