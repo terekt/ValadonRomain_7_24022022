@@ -29,6 +29,14 @@ img {
     font-size: 18px;
 }
 
+#searchinput::placeholder {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    color: black;
+    opacity: .25;
+}
+
 .searchbar i {
     font-size: 30px;
     position: absolute;
@@ -42,13 +50,8 @@ img {
 }
 
 .filtre {
-    border-radius: 5px;
-    color: #f5f6fa;
     position: relative;
-    order: 0;
     cursor: pointer;
-    height: 69px;
-    width: 170px;
     margin-right: 20px;
 }
 
@@ -64,11 +67,16 @@ img {
     border-radius: 5px;
     color: #f5f6fa;
     cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .filtre input::placeholder {
     color: #f5f6fa;
     font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .filtre::after {
@@ -132,12 +140,12 @@ img {
     display: flex;
     justify-content: space-between;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: normal;
 }
 
 .temps {
     display: flex;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .temps i {
