@@ -1,5 +1,4 @@
 const searchinput = document.getElementById("searchinput");
-var resultCached = recipes;
 
 searchinput.addEventListener("keyup", function () { // quand on tape une touche du clavier
     const input = searchinput.value; // récupère la valeur de la barre de recherche
@@ -8,22 +7,22 @@ searchinput.addEventListener("keyup", function () { // quand on tape une touche 
 
         var result = new Array;
 
-        for (let i = 0; i < resultCached.length; i++) { // récupère les recettes dont le nom correspond à la recherche
-            if (resultCached[i].name.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
-                result.push(resultCached[i]);
+        for (let i = 0; i < recipes.length; i++) { // récupère les recettes dont le nom correspond à la recherche
+            if (recipes[i].name.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
+                result.push(recipes[i]);
             }
         }
 
-        for (let i = 0; i < resultCached.length; i++) { // description
-            if (resultCached[i].description.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
-                result.push(resultCached[i]);
+        for (let i = 0; i < recipes.length; i++) { // description
+            if (recipes[i].description.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
+                result.push(recipes[i]);
             }
         }
 
-        for (let i = 0; i < resultCached.length; i++) { // ingrédients
-            for (let e = 0; e < resultCached[i].ingredients.length; e++) {
-                if (resultCached[i].ingredients[e].ingredient.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
-                    result.push(resultCached[i]);
+        for (let i = 0; i < recipes.length; i++) { // ingrédients
+            for (let e = 0; e < recipes[i].ingredients.length; e++) { // vient chercher pour chaque élément de la liste de recette, la liste des ingrédients
+                if (recipes[i].ingredients[e].ingredient.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
+                    result.push(recipes[i]);
                 }
             }
         }
