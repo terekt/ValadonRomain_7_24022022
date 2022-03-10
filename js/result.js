@@ -1,5 +1,9 @@
+import { search } from './search.js';
+import { recetteFactory } from './factory.js';
+import recipes from './recipes.js';
+
 // met à jour l'affichage des recette via le résultat de recherche
-function resultDisplay(result){
+export function results(result){
 
     var recetteSection = document.querySelector(".resultat-container");
     recetteSection.innerHTML = "";

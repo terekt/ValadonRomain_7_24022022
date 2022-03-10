@@ -1,4 +1,4 @@
-function recetteFactory(data) {
+export function recetteFactory(data) {
     const { id, name, ingredients, time, description } = data;
 
     function recetteDOM() {
