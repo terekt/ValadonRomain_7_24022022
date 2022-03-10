@@ -14,5 +14,11 @@ export function results(result){
             const recetteDOM = recetteModel.recetteDOM();
             recetteSection.appendChild(recetteDOM);
         });
+    } 
+    else {
+        const errorMessage = document.createElement("div");
+        errorMessage.setAttribute("class", "error-message");
+        errorMessage.innerHTML = "Aucune recette trouvée";
+        recetteSection.appendChild(errorMessage);
     }
 }
