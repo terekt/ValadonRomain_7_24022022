@@ -11,16 +11,14 @@ export class search {
             const input = searchinput.value; // récupère la valeur de la barre de recherche
 
             if (input.length > 2) { // si on a plus de 2 charactères
-                result = recipes.filter(function (item) { // crée et retourne un nouveau tableau à partir de la base de donnée
-                    const name = item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()); // récupère les recettes dont le nom correspond à la recherche
-                    const description = item.description.toLocaleLowerCase().includes(input.toLocaleLowerCase()); // description
-
-                    for (let i = 0; i < item.ingredients.length; i++) { // ingrédients
-                        var ingredientList = item.ingredients[i].ingredient.toLocaleLowerCase().includes(input.toLocaleLowerCase());
-                    }
-
-                    return (name || description || ingredientList) // retourne les éléments correspondants aux 3 critères
-                })
+                result = recipes.filter((item) =>  // crée et retourne un nouveau tableau à partir de la base de donnée en fonction des paramètres du dessous
+                    item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ||
+                    item.description.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ||
+                    item.ingredients.find((ingredientSelect) => 
+                        ingredientSelect.ingredient.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+                    )
+                );
+                
                 new results(result);
             }
             else { // sinon revois une variable vide
