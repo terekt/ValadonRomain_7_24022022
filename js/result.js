@@ -9,7 +9,7 @@ export function results(result){
     recetteSection.innerHTML = "";
     if (result != "") { // si la recherche n'est pas vide
         result.forEach((recette) => { // créé et insère un élément html pour chaque élément de la liste
-            const recetteModel = recetteFactory(recette);
+            const recetteModel = new recetteFactory(recette);
             const recetteDOM = recetteModel.recetteDOM();
             recetteSection.appendChild(recetteDOM);
         });
