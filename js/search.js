@@ -15,13 +15,9 @@ export class search {
                 result = [];
 
                 for (let i = 0; i < recipes.length; i++) { // récupère les recettes dont le nom correspond à la recherche
-                    if (recipes[i].name.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
-                        result.push(recipes[i]);
-                    }
-                }
-
-                for (let i = 0; i < recipes.length; i++) { // description
-                    if (recipes[i].description.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
+                    if (recipes[i].name.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ||
+                    recipes[i].description.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+                    ) {
                         result.push(recipes[i]);
                     }
                 }
