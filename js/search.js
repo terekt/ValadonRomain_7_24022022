@@ -9,7 +9,7 @@ export function search() {
 
         if (input.length > 2) { // si on a plus de 2 charactères
 
-            var result = new Array;
+            var result = [];
 
             for (let i = 0; i < recipes.length; i++) { // récupère les recettes dont le nom correspond à la recherche
                 if (recipes[i].name.toLocaleLowerCase().includes(input.toLocaleLowerCase())) {
