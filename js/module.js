@@ -3,4 +3,4 @@ import { search } from './search.js';
 import { recetteFactory } from './factory.js';
 import recipes from './recipes.js';
 
-search();
+new search();
