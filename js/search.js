@@ -45,6 +45,15 @@ export class search {
         for (let i = 0; i < filter.length; i++) { // tri les tags en fonction de ce qu'on tape dans les filtres
 
             filter[i].addEventListener("click", function () {
+
+                ingredientsList = result.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
+                applianceList = result.map(item => item.appliance);
+                ustensilsList = result.flatMap(item => item.ustensils);
+
+                ingredientsList = [...new Set(ingredientsList)]; // enlève les doublons
+                applianceList = [...new Set(applianceList)];
+                ustensilsList = [...new Set(ustensilsList)];
+
                 if (filter[i].querySelector(".tag-list") != null) { // vérifie si on a déjà la liste des tags affiché
                     document.querySelector(".tag-list").remove(); // enlève la liste des tags
                     filter[i].classList.remove("selected"); // spécifie qu'on a désélectionner le filtre afin d'animer avec le css
@@ -70,6 +79,14 @@ export class search {
 
 
             filter[i].querySelector("input").addEventListener("keyup", function () { //met à jours les tags quand on tape dans les filtres
+                
+                ingredientsList = result.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
+                applianceList = result.map(item => item.appliance);
+                ustensilsList = result.flatMap(item => item.ustensils);
+
+                ingredientsList = [...new Set(ingredientsList)]; // enlève les doublons
+                applianceList = [...new Set(applianceList)];
+                ustensilsList = [...new Set(ustensilsList)];
 
                 if (filter[i] == filter[0]) {
                     filter[0].querySelector(".tag-list").remove();
