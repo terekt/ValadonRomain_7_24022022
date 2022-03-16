@@ -41,6 +41,7 @@ export class search {
 
         })
 
+
         // EN COURS DE DEV
         for (let i = 0; i < filter.length; i++) { // tri les tags en fonction de ce qu'on tape dans les filtres
 
@@ -73,13 +74,13 @@ export class search {
 
                 else {
                     // METTRE A JOUR LES ARRAY EN FONCTION DES TAGS SELECTIONNES
-                    new searchTag(ingredientsList, applianceList, ustensilsList, filter, i);
+                    searchTag(ingredientsList, applianceList, ustensilsList, filter, i);
                 }
             });
 
 
             filter[i].querySelector("input").addEventListener("keyup", function () { //met à jours les tags quand on tape dans les filtres
-                
+
                 ingredientsList = result.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
                 applianceList = result.map(item => item.appliance);
                 ustensilsList = result.flatMap(item => item.ustensils);
@@ -93,7 +94,7 @@ export class search {
                     var ingredientsListUpdated = ingredientsList.filter((item) =>
                         item.toLocaleLowerCase().includes(filter[i].querySelector("input").value.toLocaleLowerCase())
                     );
-                    new searchTag(ingredientsListUpdated, applianceListUpdated, ustensilsListUpdated, filter, i);
+                    searchTag(ingredientsListUpdated, applianceListUpdated, ustensilsListUpdated, filter, i);
                 }
 
                 if (filter[i] == filter[1]) {
@@ -101,7 +102,7 @@ export class search {
                     var applianceListUpdated = applianceList.filter((item) =>
                         item.toLocaleLowerCase().includes(filter[i].querySelector("input").value.toLocaleLowerCase())
                     );
-                    new searchTag(ingredientsListUpdated, applianceListUpdated, ustensilsListUpdated, filter, i);
+                    searchTag(ingredientsListUpdated, applianceListUpdated, ustensilsListUpdated, filter, i);
                 }
 
                 if (filter[i] == filter[2]) {
@@ -109,10 +110,100 @@ export class search {
                     var ustensilsListUpdated = ustensilsList.filter((item) =>
                         item.toLocaleLowerCase().includes(filter[i].querySelector("input").value.toLocaleLowerCase())
                     );
-                    new searchTag(ingredientsListUpdated, applianceListUpdated, ustensilsListUpdated, filter, i);
+                    searchTag(ingredientsListUpdated, applianceListUpdated, ustensilsListUpdated, filter, i);
                 }
 
             });
+        }
+
+        function searchTag(ingredientsList, applianceList, ustensilsList, filter, i) {
+            const tagList = document.createElement("div"); // créer une div qui va contenir tous les tag
+
+            filter[i].classList.add("selected"); // spécifie qu'on a sélectionner le filtre afin d'animer avec le css
+    
+    
+            if (filter[i] == filter[0]) {
+                tagList.setAttribute("class", "tag-list ingredient-list");
+    
+                filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un ingrédient"); // remplace le texte du placeholder
+                const ingredientsDisplay = ingredientsList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
+    
+                ingredientsDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
+                    const tagModel = new tagFactory(item);
+                    const tagDOM = tagModel.tagDOM();
+                    tagList.appendChild(tagDOM);
+                });
+            }
+    
+            if (filter[i] == filter[1]) {
+                tagList.setAttribute("class", "tag-list appliance-list");
+    
+                filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un appareil"); // remplace le texte du placeholder
+                const applianceDisplay = applianceList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
+    
+                applianceDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
+                    const tagModel = new tagFactory(item);
+                    const tagDOM = tagModel.tagDOM();
+                    tagList.appendChild(tagDOM);
+                });
+            }
+    
+            if (filter[i] == filter[2]) {
+                tagList.setAttribute("class", "tag-list ustensils-list");
+    
+                filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un ustensile"); // remplace le texte du placeholder
+                const ustensilsDisplay = ustensilsList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
+    
+                ustensilsDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
+                    const tagModel = new tagFactory(item);
+                    const tagDOM = tagModel.tagDOM();
+                    tagList.appendChild(tagDOM);
+                });
+            }
+    
+            filter[i].appendChild(tagList);
+            tagSelect(filter, i);
+        }
+
+
+
+        function tagSelect(filter, i) {
+            //await searchTag();
+            const tagListInteraction = filter[i].querySelectorAll(".tag-item");
+
+            for (let e = 0; e < tagListInteraction.length; e++) {
+                tagListInteraction[e].addEventListener("click", function () {
+                    console.log(tagListInteraction[e].textContent);
+                    const tagElement = document.createElement("div");
+                    const tagContainer = document.querySelector(".tag-container");
+
+                    if (filter[i] == filter[0]) {
+                        tagElement.setAttribute("class", "tag-interact tag-ingredient");
+                    }
+                    if (filter[i] == filter[1]) {
+                        tagElement.setAttribute("class", "tag-interact tag-appliance");
+                    }
+                    if (filter[i] == filter[2]) {
+                        tagElement.setAttribute("class", "tag-interact tag-ustensils");
+                    }
+                    
+                    let card = `${tagListInteraction[e].textContent}
+                    <i class="fas fa-times close"></i>`;
+                    tagElement.innerHTML = card;
+
+                    tagContainer.appendChild(tagElement);
+                    closeTag(tagContainer);
+                })
+            }
+        }
+
+        function closeTag(tagContainer) { // permet de supprimer les tags au click
+            const tagInteract = tagContainer.querySelectorAll(".close");
+            for (let e = 0; e < tagInteract.length; e++) {
+                tagInteract[e].addEventListener("click", function (){
+                    tagInteract[e].parentNode.remove();
+                })
+            }
         }
     }
 }

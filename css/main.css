@@ -44,9 +44,36 @@ img {
     top: 172px;
 }
 
+.tag-container {
+    display: flex;
+}
+
+.tag-interact {
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    margin: 25px 20px 0 0;
+}
+
+.tag-ingredient {
+    background-color: #3282F7;
+}
+
+.tag-appliance {
+    background-color: #68D9A4;
+}
+
+.tag-ustensils {
+    background-color: #ED6454;
+}
+
 .filter-container {
     display: flex;
-    margin-top: 20px;
+    margin-top: 15px;
+}
+
+.close {
+    cursor: pointer;
 }
 
 .filter {
