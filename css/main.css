@@ -44,21 +44,21 @@ img {
     top: 172px;
 }
 
-.filtre-container {
+.filter-container {
     display: flex;
     margin-top: 20px;
 }
 
-.filtre {
+.filter {
     position: relative;
     margin-right: 20px;
 }
 
-.filtre p {
+.filter p {
     padding: 25px 0 0 20px;
 }
 
-.filtre input {
+.filter input {
     width: 150px;
     height: 70px;
     padding: 0 0 0 20px;
@@ -71,14 +71,14 @@ img {
     font-weight: 700;
 }
 
-.filtre input::placeholder {
+.filter input::placeholder {
     color: #f5f6fa;
     font-family: 'Lato', sans-serif;
     font-size: 18px;
     font-weight: bold;
 }
 
-.filtre::after {
+.filter::after {
     content: "";
     background: url("../icon/arrow-down.svg");
     background-size: contain;
@@ -210,4 +210,10 @@ img {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.error-message {
+    margin: 200px auto 0 auto;
+    color: #7e7e7e;
+    font-size: 32px;
 }
