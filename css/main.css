@@ -51,7 +51,6 @@ img {
 
 .filtre {
     position: relative;
-    cursor: pointer;
     margin-right: 20px;
 }
 
@@ -90,23 +89,60 @@ img {
     right: 10px;
     top: 19px;
     transition: all 0.4s;
+    cursor: pointer;
 }
 
-.ingredient.active+.filtre::after {
+.selected input {
+    width: 680px;
+    border-radius: 5px 5px 0 0;
+}
+
+.selected input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.selected::after {
     transform: rotateX(180deg);
-    top: -17px;
+    top: -18px;
 }
 
-.ingredient input {
+.ingredient input, .ingredient-list {
     background: #3282F7;
 }
 
-.appareil input {
+.appareil input, .appliance-list {
     background: #68D9A4;
 }
 
-.ustensile input {
+.ustensile input, .ustensils-list {
     background: #ED6454;
+}
+
+.tag-list {
+    position: absolute;
+    width: 700px;
+    border-radius: 0 0 5px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+}
+
+.tag-item {
+    color: rgb(224, 224, 224);
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 19px 19px 19px;
+    width: 195px;
+    height: 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tag-item:hover {
+    color: white;
 }
 
 .resultat-container {
