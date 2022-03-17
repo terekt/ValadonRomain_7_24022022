@@ -18,7 +18,6 @@ export class search {
 
 
         new results(result);
-        //new searchTag(ingredientsList, applianceList, ustensilsList, filter, i);
 
         searchinput.addEventListener("keyup", function () { // quand on tape une touche du clavier
             const input = searchinput.value; // récupère la valeur de la barre de recherche
@@ -31,8 +30,8 @@ export class search {
                         ingredientSelect.ingredient.toLocaleLowerCase().includes(input.toLocaleLowerCase())
                     )
                 );
-
-                new results(result);
+                
+                resultTag();
             }
             else { // sinon revois une variable vide
                 result = recipes;
@@ -42,7 +41,7 @@ export class search {
         })
 
 
-        // EN COURS DE DEV
+        
         for (let i = 0; i < filter.length; i++) { // tri les tags en fonction de ce qu'on tape dans les filtres
 
             filter[i].addEventListener("click", function () {
@@ -116,69 +115,69 @@ export class search {
             });
         }
 
+        // INTERACTION AVEC FILTRES DE TAG
         function searchTag(ingredientsList, applianceList, ustensilsList, filter, i) {
             const tagList = document.createElement("div"); // créer une div qui va contenir tous les tag
 
             filter[i].classList.add("selected"); // spécifie qu'on a sélectionner le filtre afin d'animer avec le css
-    
-    
+
+
             if (filter[i] == filter[0]) {
                 tagList.setAttribute("class", "tag-list ingredient-list");
-    
+
                 filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un ingrédient"); // remplace le texte du placeholder
                 const ingredientsDisplay = ingredientsList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
-    
+
                 ingredientsDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
                     const tagModel = new tagFactory(item);
                     const tagDOM = tagModel.tagDOM();
                     tagList.appendChild(tagDOM);
                 });
             }
-    
+
             if (filter[i] == filter[1]) {
                 tagList.setAttribute("class", "tag-list appliance-list");
-    
+
                 filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un appareil"); // remplace le texte du placeholder
                 const applianceDisplay = applianceList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
-    
+
                 applianceDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
                     const tagModel = new tagFactory(item);
                     const tagDOM = tagModel.tagDOM();
                     tagList.appendChild(tagDOM);
                 });
             }
-    
+
             if (filter[i] == filter[2]) {
                 tagList.setAttribute("class", "tag-list ustensils-list");
-    
+
                 filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un ustensile"); // remplace le texte du placeholder
                 const ustensilsDisplay = ustensilsList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
-    
+
                 ustensilsDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
                     const tagModel = new tagFactory(item);
                     const tagDOM = tagModel.tagDOM();
                     tagList.appendChild(tagDOM);
                 });
             }
-    
+
             filter[i].appendChild(tagList);
             tagSelect(filter, i);
         }
 
 
-
+        // CREATION VIGNETTE POUR TAG SELECTIONNE
         function tagSelect(filter, i) {
-            //await searchTag();
-            const tagListInteraction = filter[i].querySelectorAll(".tag-item");
+            const tagListInteraction = filter[i].querySelectorAll(".tag-item"); // récupère la liste des tags affichés
 
             for (let e = 0; e < tagListInteraction.length; e++) {
-                tagListInteraction[e].addEventListener("click", function () {
-                    console.log(tagListInteraction[e].textContent);
-                    const tagElement = document.createElement("div");
+                tagListInteraction[e].addEventListener("click", function () { // quand on clique sur un tag
+
+                    const tagElement = document.createElement("div"); // créé une div avec le nom du tag qu'on va insérer dans le html
                     const tagContainer = document.querySelector(".tag-container");
 
                     if (filter[i] == filter[0]) {
-                        tagElement.setAttribute("class", "tag-interact tag-ingredient");
+                        tagElement.setAttribute("class", "tag-interact tag-ingredient"); // spécifie une classe en fonction du type de tag
                     }
                     if (filter[i] == filter[1]) {
                         tagElement.setAttribute("class", "tag-interact tag-appliance");
@@ -186,29 +185,87 @@ export class search {
                     if (filter[i] == filter[2]) {
                         tagElement.setAttribute("class", "tag-interact tag-ustensils");
                     }
-                    
+
                     let card = `${tagListInteraction[e].textContent}
                     <i class="fas fa-times close"></i>`;
                     tagElement.innerHTML = card;
 
                     tagContainer.appendChild(tagElement);
+
+                    resultTag();
                     closeTag(tagContainer);
                 })
             }
         }
 
-        function closeTag(tagContainer) { // permet de supprimer les tags au click
+        // SUPPRESSION VIGNETTE DE TAG
+        function closeTag(tagContainer) {
             const tagInteract = tagContainer.querySelectorAll(".close");
             for (let e = 0; e < tagInteract.length; e++) {
-                tagInteract[e].addEventListener("click", function (){
+                tagInteract[e].addEventListener("click", function () {
                     tagInteract[e].parentNode.remove();
+                    resultTag();
                 })
             }
         }
+
+        function resultTag() {
+            // RECUPERE LES TAGS SELECTIONNES ET MODIFIE L'AFFICHAGE
+            const tagContainer = document.querySelector(".tag-container");
+
+            const tagElementIngredients = Array.from(tagContainer.querySelectorAll(".tag-ingredient")); // récupère toutes les div de tag dans une array
+            const tagElementAppliance = Array.from(tagContainer.querySelectorAll(".tag-appliance"));
+            const tagElementUstensils = Array.from(tagContainer.querySelectorAll(".tag-ustensils"));
+
+            var tagListIngredients = [];
+            var tagListAppliance = [];
+            var tagListUstensils = [];
+            var resultTag = [];
+
+            for (let i = 0; i < tagElementIngredients.length; i++) {
+                tagListIngredients.push(tagElementIngredients[i].textContent.slice(0, -21)); // envois le texte de chaque tag dans la nvll liste
+            }
+
+            for (let i = 0; i < tagElementAppliance.length; i++) {
+                tagListAppliance.push(tagElementAppliance[i].textContent.slice(0, -21));
+            }
+
+            for (let i = 0; i < tagElementUstensils.length; i++) {
+                tagListUstensils.push(tagElementUstensils[i].textContent.slice(0, -21));
+            }
+
+            if (tagListIngredients !== []){
+                resultTag = result.filter((item) =>
+                    item.ingredients.find((ingredientSelect) =>
+                        ingredientSelect.ingredient.includes(tagListIngredients)
+                    )
+                )
+            }
+            if (tagListAppliance !== []){
+                resultTag = resultTag.filter((item) =>
+                    item.appliance.includes(tagListAppliance)
+                )
+            }
+            if (tagListUstensils !== []){
+                resultTag = resultTag.filter((item) =>
+                    item.ustensils.find((ustensil) =>
+                        ustensil.includes(tagListUstensils) 
+                    )
+                )
+            }
+            
+
+
+            console.log(resultTag);
+
+            new results(resultTag);
+        }
+
+
     }
 }
 
-export class searchTag {
+export class searchTag { // AFFICHAGE LISTE DE TAG
     constructor(ingredientsList, applianceList, ustensilsList, filter, i) {
 
         const tagList = document.createElement("div"); // créer une div qui va contenir tous les tag
