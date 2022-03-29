@@ -7,6 +7,7 @@ export class search {
         var result = recipes; // récupère la BDD
         const searchinput = document.getElementById("searchinput"); // récupère la barre de recherche
         const filter = document.querySelectorAll(".filter"); // récupère tous les bouton de filtre
+        var resultFilter = result; //Variable des résultats filtrés par les tags
 
         var ingredientsList = result.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
         var applianceList = result.map(item => item.appliance);
@@ -30,25 +31,26 @@ export class search {
                         ingredientSelect.ingredient.toLocaleLowerCase().includes(input.toLocaleLowerCase())
                     )
                 );
-                
+                resultFilter = result;
                 resultTag();
             }
             else { // sinon revois une variable vide
                 result = recipes;
+                resultFilter = result;
                 new results(result);
             }
 
         })
 
 
-        
-        for (let i = 0; i < filter.length; i++) { // tri les tags en fonction de ce qu'on tape dans les filtres
 
-            filter[i].addEventListener("click", function () {
+        for (let i = 0; i < filter.length; i++) {
 
-                ingredientsList = result.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
-                applianceList = result.map(item => item.appliance);
-                ustensilsList = result.flatMap(item => item.ustensils);
+            filter[i].addEventListener("click", function () { // tri la liste des tags quand on clique sur un filtre
+
+                ingredientsList = resultFilter.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
+                applianceList = resultFilter.map(item => item.appliance);
+                ustensilsList = resultFilter.flatMap(item => item.ustensils);
 
                 ingredientsList = [...new Set(ingredientsList)]; // enlève les doublons
                 applianceList = [...new Set(applianceList)];
@@ -80,9 +82,9 @@ export class search {
 
             filter[i].querySelector("input").addEventListener("keyup", function () { //met à jours les tags quand on tape dans les filtres
 
-                ingredientsList = result.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
-                applianceList = result.map(item => item.appliance);
-                ustensilsList = result.flatMap(item => item.ustensils);
+                ingredientsList = resultFilter.flatMap(item => item.ingredients).map(item => item.ingredient); // récupère les ingrédients dans une array
+                applianceList = resultFilter.map(item => item.appliance);
+                ustensilsList = resultFilter.flatMap(item => item.ustensils);
 
                 ingredientsList = [...new Set(ingredientsList)]; // enlève les doublons
                 applianceList = [...new Set(applianceList)];
@@ -220,7 +222,7 @@ export class search {
             var tagListIngredients = [];
             var tagListAppliance = [];
             var tagListUstensils = [];
-            var resultTag = [];
+            resultFilter = result;
 
             for (let i = 0; i < tagElementIngredients.length; i++) {
                 tagListIngredients.push(tagElementIngredients[i].textContent.slice(0, -21)); // envois le texte de chaque tag dans la nvll liste
@@ -234,84 +236,39 @@ export class search {
                 tagListUstensils.push(tagElementUstensils[i].textContent.slice(0, -21));
             }
 
-            if (tagListIngredients !== []){
-                resultTag = result.filter((item) =>
-                    item.ingredients.find((ingredientSelect) =>
-                        ingredientSelect.ingredient.includes(tagListIngredients)
+            for (let x = 0; x < tagListIngredients.length; x++) {
+                if (tagListIngredients !== []) {
+                    resultFilter = resultFilter.filter((item) =>
+                        item.ingredients.find((ingredientSelect) =>
+                            ingredientSelect.ingredient.includes(tagListIngredients[x])
+                        )
                     )
-                )
+                }
             }
-            if (tagListAppliance !== []){
-                resultTag = resultTag.filter((item) =>
-                    item.appliance.includes(tagListAppliance)
-                )
-            }
-            if (tagListUstensils !== []){
-                resultTag = resultTag.filter((item) =>
-                    item.ustensils.find((ustensil) =>
-                        ustensil.includes(tagListUstensils) 
+
+            for (let y = 0; y < tagListAppliance.length; y++) {
+                if (tagListAppliance !== []) {
+                    resultFilter = resultFilter.filter((item) =>
+                        item.appliance.includes(tagListAppliance[y])
                     )
-                )
+                }
             }
-            
+
+            for (let u = 0; u < tagListUstensils.length; u++) {
+                if (tagListUstensils !== []) {
+                    resultFilter = resultFilter.filter((item) =>
+                        item.ustensils.find((ustensil) =>
+                            ustensil.includes(tagListUstensils[u])
+                        )
+                    )
+                }
+            }
 
 
-            console.log(resultTag);
 
-            new results(resultTag);
+            new results(resultFilter);
         }
 
 
-    }
-}
-
-export class searchTag { // AFFICHAGE LISTE DE TAG
-    constructor(ingredientsList, applianceList, ustensilsList, filter, i) {
-
-        const tagList = document.createElement("div"); // créer une div qui va contenir tous les tag
-
-        filter[i].classList.add("selected"); // spécifie qu'on a sélectionner le filtre afin d'animer avec le css
-
-
-        if (filter[i] == filter[0]) {
-            tagList.setAttribute("class", "tag-list ingredient-list");
-
-            filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un ingrédient"); // remplace le texte du placeholder
-            const ingredientsDisplay = ingredientsList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
-
-            ingredientsDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
-                const tagModel = new tagFactory(item);
-                const tagDOM = tagModel.tagDOM();
-                tagList.appendChild(tagDOM);
-            });
-        }
-
-        if (filter[i] == filter[1]) {
-            tagList.setAttribute("class", "tag-list appliance-list");
-
-            filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un appareil"); // remplace le texte du placeholder
-            const applianceDisplay = applianceList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
-
-            applianceDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
-                const tagModel = new tagFactory(item);
-                const tagDOM = tagModel.tagDOM();
-                tagList.appendChild(tagDOM);
-            });
-        }
-
-        if (filter[i] == filter[2]) {
-            tagList.setAttribute("class", "tag-list ustensils-list");
-
-            filter[i].querySelector("input").setAttribute("placeholder", "Rechercher un ustensile"); // remplace le texte du placeholder
-            const ustensilsDisplay = ustensilsList.slice(0, 30);  // créer un tableau contenant uniquement les 30 premier résultats
-
-            ustensilsDisplay.forEach((item) => { // créé et insère un élément html pour chaque élément de la liste
-                const tagModel = new tagFactory(item);
-                const tagDOM = tagModel.tagDOM();
-                tagList.appendChild(tagDOM);
-            });
-        }
-
-        filter[i].appendChild(tagList);
     }
 }
